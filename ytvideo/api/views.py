@@ -7,10 +7,9 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 
 # Create your views here.
-
-
-
     
+#Creting async function which will fetch data from the api
+#and will store it in the database
 
 @sync_to_async
 def fetch_data():
@@ -29,6 +28,7 @@ def fetch_data():
             'type' : 'video'
         }
 
+        #querying the videos with thier id
         r = requests.get(search_url, params=search_params)
 
         results = r.json()['items']
@@ -45,7 +45,7 @@ def fetch_data():
             'id' : ','.join(video_ids),
             'maxResults' : 10
         }
-
+        #querying detail infromation about the videos
         r = requests.get(video_url, params=video_params)
 
         results = r.json()['items']
@@ -61,13 +61,13 @@ def fetch_data():
                 upload_time = result['snippet']['publishedAt'],
                 thumbnail = result['snippet']['thumbnails']['high']['url']
             )
-
+            #stroing the new video data into the databse
             video_data.save()
         
         p=p-1
     
     
-
+#it will give a html response based on the query
 async def home(request):
     
 
