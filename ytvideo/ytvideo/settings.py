@@ -132,7 +132,7 @@ STATICFILES_DIRS = (
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
